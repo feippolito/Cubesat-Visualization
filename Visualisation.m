@@ -1,37 +1,42 @@
 function Visualisation (q)      
-%Cubesat altitude visualisation with quatenion as input
+%Altitude Cubesat visualisation with quartenion as imput
 
 interval = 0.001;               %Interval (seconds)
+SI=5;                           %Scatter interval
 view(135,45)                    %Starting view
-AL = 5;                         %Define graph axis limits
 
-xColor = [ 0 0 0.6];
-yColor = [ 0 0.6 0];
-zColor = [ 0.6 0 0];            %Axis/Faces Colors
-CubeColor = [0.2 0.2 0.2];      %Cube Color
+xColor = [ 0 0 0.8];
+yColor = [ 0 0.8 0];
+zColor = [ 0.8 0 0];            %axis/Faces Colors
+OtherColor = [0.2 0.2 0.2];     %Cube Color
 
 s=5;                            %Scatter size
-SI=5;                           %Scatter interval
-scatterColorx = xColor;         %Scatter color x axis
-scatterColory = yColor;         %Scatter color y axis
-scatterColorz = zColor;         %Scatter color z axis
+scatterColorx = xColor;   
+scatterColory = yColor;   
+scatterColorz = zColor;   
 
 FAL = 5;                        %Fixed axis lenght
 CAL = 2;                        %Cube  axis lenght
 
-Xxaxis=[0;CAL];                 
+map = [zColor;yColor;xColor;OtherColor];
+
+colormap(map);
+
+Xxaxis=[0;CAL];                  %Cube X Axis
 Yxaxis=[0;0];
 Zxaxis=[0;0];
 
 Xyaxis=[0;0];
-Yyaxis=[0;CAL];                
+Yyaxis=[0;CAL];                  %Cube Y Axis
 Zyaxis=[0;0];    
 
 Xzaxis=[0;0];
 Yzaxis=[0;0];
-Zzaxis=[0;CAL];                 
+Zzaxis=[0;CAL];                  %Cube Z axis
 
-width  =  1;                    %Cube size
+AL = 5;                          %Define graph axis limits
+
+width  =  1;                     %Cube size
 length = 1;
 height = 1;
 
@@ -54,10 +59,7 @@ C = [10 ; 2 ; 4 ; 10 ; 6 ;10];
 
 X = X*length;
 Y = Y*width;
-Z = Z*height;
-
-map = [zColor;yColor;xColor;CubeColor];
-colormap(map);
+Z = Z*height;                       %Cube size
 
 hold on
 cubo  = fill3(X,Y,Z,C);
@@ -77,11 +79,12 @@ Ox=scatter3(Xxaxis(2),Yxaxis(2),Zxaxis(2),'filled','MarkerEdgeColor','k','Marker
 Oy=scatter3(Xyaxis(2),Yyaxis(2),Zyaxis(2),'filled','MarkerEdgeColor','k','MarkerFaceColor',yColor);
 Oz=scatter3(Xzaxis(2),Yzaxis(2),Zzaxis(2),'filled','MarkerEdgeColor','k','MarkerFaceColor',zColor);
 
-title('\fontsize{16}CubeSat')              %Plot title
+
 xlabel('X');
 ylabel('Y'); 
 zlabel('Z');
-axis([-AL AL -AL AL -AL AL]);
+axis([-AL AL -AL AL -AL AL])
+title('\fontsize{16}')              %Plot title
 grid on
 box on
 
@@ -92,8 +95,7 @@ zaxis2 =  [Xzaxis';Yzaxis';Zzaxis'];
 
 for t=1:size(q,1)
 
-    Q=q(t,:);  
-    Q;
+    Q=q(t,:);   
     DCM = quat2dcm(Q);
     
     Vx = DCM'*xaxis2;
