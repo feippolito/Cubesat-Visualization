@@ -75,14 +75,15 @@ xaxis2 =  [Xxaxis';Yxaxis';Zxaxis']
 yaxis2 =  [Xyaxis';Yyaxis';Zyaxis']
 zaxis2 =  [Xzaxis';Yzaxis';Zzaxis']
 
-for t=0:0.01:1000
+for t=0:0.1:1000
 
-    q1=cos(t);
-    q2=sin(t+pi/2);
-    q3=(cos(t))^2;
-    q4=(sin(t+3*pi/2));
-  
-    q=[q1 q2 q3 q4];   
+    q1=cos(0.2*t);
+    q2=0.2*cos(t);
+    q3=(cos(0.2*t+pi));
+    q4=(cos(0.25*t));   
+    
+    q=[q1 q2 q3 q4];
+        
     DCM = quat2dcm(q);
     Vx = DCM'*xaxis2;
     Vy = DCM'*yaxis2;
@@ -133,8 +134,10 @@ for t=0:0.01:1000
     set(Oz,'XData',Xzaxis(2));
     set(Oz,'YData',Yzaxis(2));
     set(Oz,'ZData',Zzaxis(2));
-    scatter3(Xzaxis(2),Yzaxis(2),Zzaxis(2),'filled','MarkerEdgeColor','k','MarkerFaceColor',scatterColor)
     
+    if (mod(t,0.1) == 0)
+        %scatter3(Xzaxis(2),Yzaxis(2),Zzaxis(2),'filled','MarkerEdgeColor','k','MarkerFaceColor',scatterColor)
+    end
     drawnow 
     pause(0.0001); 
 
